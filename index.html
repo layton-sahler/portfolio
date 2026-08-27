@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layton Sahler — Embedded &amp; Hardware Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #EAE7DD;
+    --paper-dim: #DEDACD;
+    --ink: #1A2421;
+    --ink-soft: #4B5650;
+    --trace: #3B6E5E;
+    --trace-bright: #4F8C77;
+    --copper: #B0703B;
+    --line: #C7C2B4;
+    --white: #F6F4EE;
+    --radius: 3px;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.5;
+  }
+
+  a{ color: var(--trace); }
+
+  :focus-visible{
+    outline: 2px solid var(--copper);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  }
+
+  .wrap{
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    padding: 96px 0 72px;
+    overflow: hidden;
+  }
+  .hero-trace{
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: .5;
+    pointer-events: none;
+  }
+  .hero-inner{ position: relative; z-index: 1; }
+
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--trace);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .dot{
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--trace-bright);
+    box-shadow: 0 0 0 3px rgba(59,110,94,.18);
+  }
+
+  h1{
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(38px, 6vw, 58px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    margin: 0 0 18px;
+  }
+
+  .pitch{
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 54ch;
+    margin: 0 0 30px;
+  }
+
+  .hero-links{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .hero-links a{
+    text-decoration: none;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    padding: 9px 16px;
+    border-radius: var(--radius);
+    background: var(--white);
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .hero-links a:hover{ border-color: var(--trace); transform: translateY(-1px); }
+  .hero-links a.primary{
+    background: var(--trace);
+    border-color: var(--trace);
+    color: var(--white);
+  }
+  .hero-links a.primary:hover{ background: var(--trace-bright); }
+
+  /* ---------- SECTION LABEL ---------- */
+  .section-label{
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 36px;
+    padding-top: 48px;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ---------- SCHEMATIC / BOARD ---------- */
+  .board{
+    position: relative;
+    padding-left: 34px;
+  }
+  .board::before{
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--trace) 0px, var(--trace) 6px,
+      transparent 6px, transparent 11px
+    );
+  }
+
+  .component{
+    position: relative;
+    margin-bottom: 64px;
+  }
+  .component::before{
+    /* node on the trace */
+    content: "";
+    position: absolute;
+    left: -34px;
+    top: 26px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--trace);
+  }
+
+  .chip{
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 28px 28px 26px;
+    position: relative;
+  }
+  /* pin notches, DIP-chip style */
+  .chip::before, .chip::after{
+    content: "";
+    position: absolute;
+    top: -1px;
+    width: 22px;
+    height: 8px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+  }
+  .chip::before{ left: 24px; }
+  .chip::after{ left: 56px; }
+
+  .designator{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--copper);
+    letter-spacing: .06em;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .chip h2{
+    font-family: var(--sans);
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .chip p.desc{
+    color: var(--ink-soft);
+    margin: 0 0 18px;
+    max-width: 62ch;
+  }
+
+  .tags{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .tag{
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .03em;
+    background: var(--paper-dim);
+    color: var(--ink-soft);
+    padding: 4px 9px;
+    border-radius: 3px;
+    border: 1px solid var(--line);
+  }
+
+  .chip-links{
+    display: flex;
+    gap: 18px;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .chip-links a{ text-decoration: none; }
+  .chip-links a:hover{ text-decoration: underline; }
+  .chip-links .muted{ color: var(--ink-soft); font-style: italic; }
+
+  /* ---------- SLIDESHOW ---------- */
+  .slideshow{
+    margin: 22px 0 24px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--ink);
+  }
+  .slideshow-frame{
+    position: relative;
+    aspect-ratio: 16 / 10;
+    width: 100%;
+  }
+  .slide{
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    color: var(--paper);
+    text-align: center;
+    padding: 24px;
+  }
+  .slide.active{ display: flex; }
+  .slide img, .slide video{
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 3px;
+  }
+  .slide-placeholder{
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 8px;
+    background:
+      linear-gradient(135deg, rgba(59,110,94,.35), rgba(176,112,59,.25)),
+      repeating-linear-gradient(45deg, rgba(246,244,238,.04) 0 2px, transparent 2px 10px);
+    border: 1px dashed rgba(246,244,238,.35);
+    border-radius: 3px;
+    margin: 16px;
+  }
+  .slide-placeholder .ph-label{
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .06em;
+    color: rgba(246,244,238,.85);
+    text-transform: uppercase;
+  }
+  .slide-placeholder .ph-sub{
+    font-family: var(--sans);
+    font-size: 13px;
+    color: rgba(246,244,238,.6);
+    max-width: 40ch;
+  }
+  .slide-caption{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: rgba(246,244,238,.7);
+  }
+
+  .video-embed{
+    width: 100%;
+    height: 100%;
+    margin: 16px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #000;
+  }
+  .video-embed iframe{
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  .slideshow-controls{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: rgba(0,0,0,.15);
+    border-top: 1px solid rgba(246,244,238,.12);
+  }
+  .ss-btn{
+    font-family: var(--mono);
+    font-size: 12px;
+    background: transparent;
+    border: 1px solid rgba(246,244,238,.35);
+    color: var(--paper);
+    padding: 6px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease;
+  }
+  .ss-btn:hover{ background: rgba(246,244,238,.1); border-color: var(--paper); }
+
+  .ss-dots{ display: flex; gap: 7px; }
+  .ss-dot{
+    width: 7px; height: 7px; border-radius: 50%;
+    background: rgba(246,244,238,.3);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  .ss-dot.active{ background: var(--copper); }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding: 64px 0 80px;
+    border-top: 1px solid var(--line);
+    margin-top: 24px;
+  }
+  footer h3{
+    font-family: var(--sans);
+    font-size: 20px;
+    margin: 0 0 10px;
+  }
+  footer p{ color: var(--ink-soft); margin: 0 0 20px; max-width: 50ch; }
+  .footer-links{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .footer-links a{
+    text-decoration: none;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    padding: 8px 14px;
+    border-radius: var(--radius);
+    background: var(--white);
+  }
+  .footer-links a:hover{ border-color: var(--trace); }
+
+  @media (max-width: 560px){
+    .hero{ padding: 64px 0 48px; }
+    .board{ padding-left: 26px; }
+    .board::before{ left: 3px; }
+    .component::before{ left: -26px; }
+    .chip{ padding: 22px 18px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <svg class="hero-trace" viewBox="0 0 880 320" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M -20 40 H 300 V 90 H 620 V 30 H 900" fill="none" stroke="#3B6E5E" stroke-width="1.5" stroke-dasharray="1 7" stroke-linecap="round"/>
+    <path d="M -20 220 H 180 V 260 H 500 V 200 H 900" fill="none" stroke="#B0703B" stroke-width="1.5" stroke-dasharray="1 7" stroke-linecap="round"/>
+    <circle cx="300" cy="40" r="3" fill="#3B6E5E"/>
+    <circle cx="620" cy="30" r="3" fill="#3B6E5E"/>
+    <circle cx="180" cy="220" r="3" fill="#B0703B"/>
+    <circle cx="500" cy="200" r="3" fill="#B0703B"/>
+  </svg>
+  <div class="wrap hero-inner">
+    <div class="eyebrow"><span class="dot"></span>LAYTON SAHLER — SIGNAL: ONLINE</div>
+    <h1>I build the layer<br>between hardware and&nbsp;meaning.</h1>
+    <p class="pitch">
+      Embedded systems and hardware-software engineer. I work where sensors,
+      firmware, and application code meet — turning raw signal into something
+      a person can act on.
+    </p>
+    <div class="hero-links">
+      <a class="primary" href="#board">View projects</a>
+      <a href="https://github.com/layton-sahler" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="mailto:you@example.com">Email</a>
+      <a href="#" >Resume (PDF)</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap" id="board">
+  <p class="section-label">// selected work — 4 of 5 repositories</p>
+
+  <div class="board">
+
+    <!-- VenoSense -->
+    <article class="component">
+      <div class="chip">
+        <span class="designator">U1 · FLAGSHIP</span>
+        <h2>VenoSense</h2>
+        <p class="desc">
+          A companion app for a prototype wearable blood-clot detection device.
+          Streams sensor data from the hardware, runs it against a risk model,
+          and pushes emergency notifications to the user and their care team
+          when a reading crosses a dangerous threshold.
+        </p>
+        <div class="tags">
+          <span class="tag">QML</span>
+          <span class="tag">Embedded sensor I/O</span>
+          <span class="tag">Real-time alerts</span>
+          <span class="tag">Medical device UX</span>
+        </div>
+
+        <!-- SLIDESHOW: replace placeholder slides with your actual images/video -->
+        <div class="slideshow" id="venosense-slideshow">
+          <div class="slideshow-frame">
+
+            <div class="slide active" data-index="0">
+              <div class="slide-placeholder">
+                <span class="ph-label">Layton Sahler and Tejonanditha Kolati.jpg</span>
+                <span class="ph-sub">Photo of the prototype device / sensor board</span>
+              </div>
+              <span class="slide-caption">The prototype: what it detects and how it's worn</span>
+            </div>
+
+            <div class="slide" data-index="1">
+              <div class="slide-placeholder">
+                <span class="ph-label">Layton Sahler and Tejonanditha Kolati (1).jpg</span>
+                <span class="ph-sub">Screenshot of the app receiving live sensor data</span>
+              </div>
+              <span class="slide-caption">Live data pipeline from device to app</span>
+            </div>
+
+            <div class="slide active" data-index="2">
+              <div class="slide-placeholder">
+                <span class="ph-label">Layton Sahler and Tejonanditha Kolati (2).jpg</span>
+                <span class="ph-sub">Photo of the prototype device / sensor board</span>
+              </div>
+              <span class="slide-caption">The prototype: what it detects and how it's worn</span>
+            </div>
+
+            <div class="slide active" data-index="3">
+              <div class="slide-placeholder">
+                <span class="ph-label">Layton Sahler and Tejonanditha Kolati (3).jpg</span>
+                <span class="ph-sub">Photo of the prototype device / sensor board</span>
+              </div>
+              <span class="slide-caption">The prototype: what it detects and how it's worn</span>
+            </div>
+
+            <div class="slide active" data-index="4">
+              <div class="slide-placeholder">
+                <span class="ph-label">Layton Sahler and Tejonanditha Kolati (4).jpg</span>
+                <span class="ph-sub">Photo of the prototype device / sensor board</span>
+              </div>
+              <span class="slide-caption">The prototype: what it detects and how it's worn</span>
+            </div>
+
+            <div class="slide active" data-index="5">
+              <div class="slide-placeholder">
+                <span class="ph-label">Layton Sahler and Tejonanditha Kolati (5).jpg</span>
+                <span class="ph-sub">Photo of the prototype device / sensor board</span>
+              </div>
+              <span class="slide-caption">The prototype: what it detects and how it's worn</span>
+            </div>
+
+            <div class="slide active" data-index="6">
+              <div class="slide-placeholder">
+                <span class="ph-label">Layton Sahler and Tejonanditha Kolati (6).jpg</span>
+                <span class="ph-sub">Photo of the prototype device / sensor board</span>
+              </div>
+              <span class="slide-caption">The prototype: what it detects and how it's worn</span>
+            </div>
+
+            <div class="slide" data-index="7">
+              <div class="video-embed">
+                <iframe
+                  src="https://www.youtube.com/embed/33Wq_Xhyaag"
+                  title="VenoSense presentation"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  loading="lazy">
+                </iframe>
+              </div>
+              <span class="slide-caption">Live health monitoring with real time signal processing</span>
+            </div>
+
+            <div class="slide" data-index="3">
+              <div class="slide-placeholder">
+                <span class="ph-label">Layton Sahler and Tejonanditha Kolati (7).jpg</span>
+                <span class="ph-sub">Diagram or slide from your original presentation</span>
+              </div>
+              <span class="slide-caption">System architecture, from your presentation deck</span>
+            </div>
+
+            <div class="slide" data-index="3">
+              <div class="slide-placeholder">
+                <span class="ph-label">Layton Sahler and Tejonanditha Kolati (8).jpg</span>
+                <span class="ph-sub">Diagram or slide from your original presentation</span>
+              </div>
+              <span class="slide-caption">System architecture, from your presentation deck</span>
+            </div>
+          </div>
+          <div class="slideshow-controls">
+            <button class="ss-btn" data-action="prev" aria-label="Previous slide">← Prev</button>
+            <div class="ss-dots" role="tablist" aria-label="Slide navigation"></div>
+            <button class="ss-btn" data-action="next" aria-label="Next slide">Next →</button>
+          </div>
+        </div>
+
+        <div class="chip-links">
+          <a href="https://github.com/layton-sahler/BloodClotImagineering" target="_blank" rel="noopener">Repo ↗</a>
+          <span class="muted">Live demo — hardware-dependent</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Color Sorter -->
+    <article class="component">
+      <div class="chip">
+        <span class="designator">U2</span>
+        <h2>Color-Sorter</h2>
+        <div class="slide" data-index="7">
+          <div class="video-embed">
+            <iframe
+              width="884" 
+              height="498" 
+              src="https://www.youtubeeducation.com/embed/McEUvDDO87I" 
+              title="EK210 Demo" frameborder="0" allow="accelerometer; 
+              autoplay; 
+              clipboard-write; 
+              encrypted-media; 
+              gyroscope; 
+              picture-in-picture; 
+              web-share" referrerpolicy="strict-origin-when-cross-origin" 
+              allowfullscreen>
+            </iframe>
+          </div>
+          <span class="slide-caption">Live health monitoring with real time signal processing</span>
+        </div>
+        <p class="desc">
+          Autonomous color classification and sorting system. A TCS34725
+          color sensor feeds readings into a Euclidean-distance nearest-neighbor
+          classifier, which drives a custom PWM servo controller to physically
+          sort objects in real time.
+        </p>
+        <div class="tags">
+          <span class="tag">C++</span>
+          <span class="tag">TCS34725 sensor</span>
+          <span class="tag">PWM servo control</span>
+          <span class="tag">Nearest-neighbor classifier</span>
+        </div>
+        <div class="chip-links">
+          <a href="https://github.com/layton-sahler/Color-Sorter" target="_blank" rel="noopener">Repo ↗</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Lutron Audio Visualizer -->
+    <article class="component">
+      <div class="chip">
+        <span class="designator">U3</span>
+        <h2>Lutron Audio Visualizer</h2>
+        <p class="desc">
+          Real-time audio visualizer that runs an FFT over incoming sound and
+          maps frequency bands to a 10×7 individually addressable LED matrix,
+          turning sound into a physical light display.
+        </p>
+        <div class="tags">
+          <span class="tag">C++</span>
+          <span class="tag">FFT / DSP</span>
+          <span class="tag">Addressable LEDs</span>
+        </div>
+        <div class="chip-links">
+          <a href="https://github.com/layton-sahler/Lutron-Audio-Visualizer" target="_blank" rel="noopener">Repo ↗</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Genji -->
+    <article class="component">
+      <div class="chip">
+        <span class="designator">U4</span>
+        <h2>The Tale of Genji</h2>
+        <p class="desc">
+          Interactive mapping tool for The Tale of Genji — visualizes where each of the novel's 795 waka poems was sent and received across 130+ location pages. Built on a graph database with an API pipeline powering live data on the frontend. Page content is AI-generated from the source text, backed by a verification system so researchers can check every claim against the original.        </p>
+        <div class="tags">
+          <span class="tag">Next.js</span>
+          <span class="tag">REST API</span>
+          <span class="tag">React</span>
+          <span class="tag">Neo4j/CypherQL</span>
+        </div>
+        <div class="chip-links">
+          <a href="https://github.com/genjipoems/genji-neo4j-web-display-next" target="_blank" rel="noopener">Repo ↗</a>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</div>
+
+<footer class="wrap">
+  <h3>Let's talk</h3>
+  <p>
+    Open to embedded, hardware-software, and systems roles. The fastest way
+    to reach me is email — happy to walk through the reasoning behind any
+    of these projects in more depth.
+  </p>
+  <div class="footer-links">
+    <a href="mailto:you@example.com">Email</a>
+    <a href="https://github.com/layton-sahler" target="_blank" rel="noopener">All repositories ↗</a>
+    <a href="#">LinkedIn</a>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    const shows = document.querySelectorAll('.slideshow');
+    shows.forEach(show => {
+      const slides = Array.from(show.querySelectorAll('.slide'));
+      const dotsWrap = show.querySelector('.ss-dots');
+      let current = 0;
+
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'ss-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        dot.addEventListener('click', () => go(i));
+        dotsWrap.appendChild(dot);
+      });
+      const dots = Array.from(dotsWrap.children);
+
+      function go(i){
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = (i + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+      }
+
+      show.querySelector('[data-action="prev"]').addEventListener('click', () => go(current - 1));
+      show.querySelector('[data-action="next"]').addEventListener('click', () => go(current + 1));
+
+      show.setAttribute('tabindex', '0');
+      show.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') go(current - 1);
+        if (e.key === 'ArrowRight') go(current + 1);
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
